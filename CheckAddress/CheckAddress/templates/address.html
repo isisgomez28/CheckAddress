@@ -5,13 +5,13 @@
 <h2>{{ title }}.</h2>
 
 <form method="POST" action="/address">
-    <div class="form-field">{{ form.street1.label }} {{ form.street1(size=30) }}</div>
-    <div class="form-field">{{ form.street2.label }} {{ form.street2(size=30) }}</div>
-    <div class="form-field">{{ form.apartment.label }} {{ form.apartment(size=30) }}</div>
-    <div class="form-field">{{ form.state.label }} {{ form.state(size=30) }}</div>
-    <div class="form-field">{{ form.sector.label }} {{ form.sector(size=30) }}</div>
-    <div class="form-field">{{ form.notes.label }} {{ form.notes(size=30) }}</div>
-    {{ form.submit }}
+    <div class="form-field">{{ fAddress.street1.label }} {{ fAddress.street1(size=30) }}</div>
+    <div class="form-field">{{ fAddress.street2.label }} {{ fAddress.street2(size=30) }}</div>
+    <div class="form-field">{{ fAddress.apartment.label }} {{ fAddress.apartment(size=30) }}</div>
+    <div class="form-field">{{ fAddress.state.label }} {{ fAddress.state(size=30) }}</div>
+    <div class="form-field">{{ fAddress.sector.label }} {{ fAddress.sector(size=30) }}</div>
+    <div class="form-field">{{ fAddress.notes.label }} {{ fAddress.notes(size=30) }}</div>
+    {{ fAddress.submit }}
 </form>
 
 {% endblock %}

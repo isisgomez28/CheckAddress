@@ -3,7 +3,7 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template
+from flask import render_template, request, url_for
 from CheckAddress import app
 
 from flask_wtf import FlaskForm
@@ -13,7 +13,6 @@ from wtforms.validators import DataRequired, Length
 """
     Forms
 """
-
 class AddressForm(FlaskForm):
     """Address form."""
     street1 = StringField('Street1', [
@@ -28,8 +27,7 @@ class AddressForm(FlaskForm):
     sector = StringField('Sector', [
         DataRequired()])
     notes = StringField('Notes')
-    
-    recaptcha = RecaptchaField()
+
     submit = SubmitField('Submit')
 
 """
@@ -69,8 +67,8 @@ def about():
 def address():
     oAddress = AddressForm()
 
-    if oAddress.validate_on_submit():
-        return redirect(url_for('success'))
+    if request.method == "POST":
+        return redirect(url_for('home'))
     
     return render_template(
         'address.html',
