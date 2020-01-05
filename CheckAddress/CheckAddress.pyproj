@@ -41,6 +41,7 @@
     <Folder Include="CheckAddress\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CheckAddress\templates\address.html" />
     <Content Include="requirements.txt" />
     <Content Include="CheckAddress\static\content\bootstrap.css" />
     <Content Include="CheckAddress\static\content\bootstrap.min.css" />

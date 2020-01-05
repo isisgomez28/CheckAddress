@@ -6,6 +6,35 @@ from datetime import datetime
 from flask import render_template
 from CheckAddress import app
 
+from flask_wtf import FlaskForm
+from wtforms import StringField, TextField, SubmitField
+from wtforms.validators import DataRequired, Length
+
+"""
+    Forms
+"""
+
+class AddressForm(FlaskForm):
+    """Address form."""
+    street1 = StringField('Street1', [
+        DataRequired(),
+        Length(min = 4, message=('Your street name is to short'))])
+    street2 = StringField('Street2')
+    apartment = StringField('Apartment', [
+        DataRequired(),
+        Length(min = 2, message=('Your apartment name is to short'))])
+    state = StringField('State', [
+        DataRequired()])
+    sector = StringField('Sector', [
+        DataRequired()])
+    notes = StringField('Notes')
+    
+    recaptcha = RecaptchaField()
+    submit = SubmitField('Submit')
+
+"""
+    "Routes
+"""
 @app.route('/')
 @app.route('/home')
 def home():
@@ -35,3 +64,19 @@ def about():
         year=datetime.now().year,
         message='Your application description page.'
     )
+
+@app.route('/address', methods=('GET', 'POST'))
+def address():
+    oAddress = AddressForm()
+
+    if oAddress.validate_on_submit():
+        return redirect(url_for('success'))
+    
+    return render_template(
+        'address.html',
+        title = 'Address',
+        year = datetime.now().year,
+        fAddress = oAddress
+    )
+
+
