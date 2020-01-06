@@ -2,12 +2,18 @@
 Routes and views for the flask application.
 """
 
+import os
 from datetime import datetime
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for, redirect
+from flask_uploads import UploadSet
+
 from CheckAddress import app
 
 from flask_wtf import FlaskForm
+from flask_wtf.recaptcha import RecaptchaField
 from wtforms import StringField, TextField, SubmitField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from werkzeug.utils import secure_filename
 from wtforms.validators import DataRequired, Length
 
 """
@@ -28,10 +34,16 @@ class AddressForm(FlaskForm):
         DataRequired()])
     notes = StringField('Notes')
 
+    frontDoor = FileField('Front Door', validators=[
+        FileAllowed(['jpg', 'png'], 'Images only!')
+    ])
+
+    recaptcha = RecaptchaField()
+
     submit = SubmitField('Submit')
 
 """
-    "Routes
+    Routes
 """
 @app.route('/')
 @app.route('/home')
@@ -65,16 +77,21 @@ def about():
 
 @app.route('/address', methods=('GET', 'POST'))
 def address():
-    oAddress = AddressForm()
+    oAddress = AddressForm(csrf_enabled=False)
 
-    if request.method == "POST":
+    if oAddress.validate_on_submit():
+        f = oAddress.frontDoor.data
+        filename = secure_filename(f.filename)
+        f.save(os.path.join(
+            app.instance_path, 'photos', filename
+        ))
         return redirect(url_for('home'))
     
     return render_template(
         'address.html',
         title = 'Address',
         year = datetime.now().year,
-        fAddress = oAddress
+        form = oAddress
     )
 
 
