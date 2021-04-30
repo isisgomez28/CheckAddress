@@ -24,7 +24,7 @@ requests==2.22.0
 setuptools==40.8.0
 six==1.12.0
 typed-ast==1.4.0
-urllib3==1.25.7
+urllib3==1.25.8
 virtualenv==16.7.8
 Werkzeug==0.16.0
 wrapt==1.11.2
